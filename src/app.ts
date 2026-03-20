@@ -1,15 +1,20 @@
 import Fastify, { type FastifyInstance } from 'fastify'
 import sensible from '@fastify/sensible'
 import { productRoutes } from './routes/products/index'
+import type { ProductStore } from './routes/products/handlers'
 
-export async function buildApp(): Promise<FastifyInstance> {
+type BuildAppOptions = {
+  store?: ProductStore
+}
+
+export async function buildApp(options: BuildAppOptions = {}): Promise<FastifyInstance> {
   try {
     const app = Fastify({
       logger: process.env.NODE_ENV !== 'test',
     })
 
     await app.register(sensible)
-    await app.register(productRoutes, { prefix: '/api' })
+    await app.register(productRoutes, { prefix: '/api', store: options.store })
 
     app.setNotFoundHandler((_req, reply) => {
       reply.status(404).send({ message: 'Route not found' })
@@ -22,11 +27,9 @@ export async function buildApp(): Promise<FastifyInstance> {
       reply.status(statusCode).send({ message })
     })
 
-    return app;
-  }
-  catch (err) {
+    return app
+  } catch (err) {
     console.error('Error building app:', err)
-    process.exit(1);
+    process.exit(1)
   }
-
 }

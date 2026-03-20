@@ -30,6 +30,10 @@ export function remove(id: string): Promise<boolean> {
   return Promise.resolve(store.delete(id))
 }
 
-export function replaceAll(): Promise<void> {
+export function replaceAll(products: Product[]): Promise<void> {
+  store.clear()
+  for (const product of products) {
+    store.set(product.id, product)
+  }
   return Promise.resolve()
 }

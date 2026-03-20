@@ -5,7 +5,11 @@
   "scripts": {
     "start:dev": "tsx watch src/index.ts",
     "start:prod": "npm run build && node dist/index.js",
+    "start:multi": "tsx watch src/cluster.ts",
+    "start:multi:prod": "npm run build && node dist/cluster.js",
     "build": "tsup",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "lint": "eslint src",
     "lint:fix": "eslint src --fix"
   },
@@ -17,16 +21,19 @@
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
+    "@types/supertest": "^6.0.2",
     "@types/uuid": "^10.0.0",
     "@typescript-eslint/eslint-plugin": "^8.18.0",
     "@typescript-eslint/parser": "^8.18.0",
     "cross-env": "^7.0.3",
     "eslint": "^9.16.0",
     "globals": "^17.4.0",
+    "supertest": "^7.0.0",
     "tsup": "^8.5.1",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2",
-    "typescript-eslint": "^8.57.1"
+    "typescript-eslint": "^8.57.1",
+    "vitest": "^2.1.8"
   },
   "engines": {
     "node": ">=24.10.0"
